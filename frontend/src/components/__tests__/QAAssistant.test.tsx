@@ -43,7 +43,7 @@ describe('QAAssistant Component', () => {
   });
 
   it('should send a query and display the response', async () => {
-    (fetch as any).mockResolvedValueOnce({
+    (fetch as import('vitest').Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ answer: 'Yes, you can vote early in California.' }),
     });

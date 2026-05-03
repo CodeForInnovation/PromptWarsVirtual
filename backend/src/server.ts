@@ -43,7 +43,7 @@ app.use(
         scriptSrc: [
           "'self'",
           "'unsafe-eval'", // Required for Google Translate widget
-          (req, res: any) => `'nonce-${res.locals.nonce}'`,
+          (req: express.Request, res: express.Response) => `'nonce-${res.locals.nonce}'`,
           'https://translate.googleapis.com',
           'https://translate.google.com',
           'https://translate-pa.googleapis.com',

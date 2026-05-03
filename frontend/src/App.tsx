@@ -19,7 +19,14 @@ interface Deadlines {
 declare global {
   interface Window {
     googleTranslateElementInit: () => void;
-    google: any;
+    google: {
+      translate: {
+        TranslateElement: {
+          new (options: Record<string, string | number>, elementId: string): unknown;
+          InlineLayout: { SIMPLE: number };
+        };
+      };
+    };
   }
 }
 
