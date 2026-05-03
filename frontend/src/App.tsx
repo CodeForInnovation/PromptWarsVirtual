@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import Roadmap from './components/Roadmap';
 import QAAssistant from './components/QAAssistant';
+import PledgeToVote from './components/PledgeToVote';
 
 const REGIONS: Record<string, string> = {
   CA: 'California',
@@ -41,16 +42,20 @@ export default function App() {
 
         {/* ── Header ─────────────────────────────────────── */}
         <header role="banner">
-          <div class="flex items-center gap-3 mb-4">
-            <div
-              class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30"
-              aria-hidden="true"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30"
+                aria-hidden="true"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <span class="text-slate-400 text-sm font-medium tracking-widest uppercase" aria-hidden="true">CivicGuide</span>
             </div>
-            <span class="text-slate-400 text-sm font-medium tracking-widest uppercase" aria-hidden="true">CivicGuide</span>
+            {/* Google Translate Widget Container */}
+            <div id="google_translate_element" aria-label="Translate Page"></div>
           </div>
 
           <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-3">
@@ -128,9 +133,10 @@ export default function App() {
           </section>
 
           {/* Q&A Assistant */}
-          <section aria-labelledby="qa-heading">
+          <section aria-labelledby="qa-heading" class="flex flex-col gap-6">
             <h2 id="qa-heading" class="sr-only">Election Q&amp;A Assistant</h2>
             <QAAssistant />
+            <PledgeToVote />
           </section>
         </main>
 

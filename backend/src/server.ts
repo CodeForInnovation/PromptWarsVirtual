@@ -16,10 +16,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https://generativelanguage.googleapis.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://translate.googleapis.com", "https://translate.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://translate.googleapis.com"],
+      imgSrc: ["'self'", "data:", "https:", "https://translate.googleapis.com", "https://translate.google.com", "https://www.gstatic.com"],
+      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://translate.googleapis.com"],
       frameSrc: ["https://www.youtube.com", "https://youtube.com"],
     },
   },
