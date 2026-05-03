@@ -47,7 +47,7 @@ export default function PledgeToVote() {
         (This connects securely to a Google Form).
       </p>
 
-      <form onSubmit={handleSubmit} method="POST" action={GOOGLE_FORM_ACTION_URL} target="_blank" class="flex flex-col gap-3">
+      <form onSubmit={handleSubmit} method="POST" class="flex flex-col gap-3">
         <label for="pledge-name" class="sr-only">First Name</label>
         <input 
           id="pledge-name"

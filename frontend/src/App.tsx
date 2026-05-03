@@ -17,6 +17,24 @@ export default function App() {
   const [fetchError, setFetchError] = useState(false);
 
   useEffect(() => {
+    // Add Google Translate script dynamically after mount to prevent race conditions with Preact
+    if (!document.getElementById('google-translate-script')) {
+      const addScript = document.createElement('script');
+      addScript.id = 'google-translate-script';
+      addScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      addScript.async = true;
+      document.body.appendChild(addScript);
+
+      (window as any).googleTranslateElementInit = () => {
+        new (window as any).google.translate.TranslateElement({
+          pageLanguage: 'en',
+          layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      };
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchDeadlines = async () => {
       setLoading(true);
       setFetchError(false);
