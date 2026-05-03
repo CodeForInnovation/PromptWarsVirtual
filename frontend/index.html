@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="CivicGuide - Your essential election roadmap and Q&A assistant." />
-    <title>CivicGuide - Election Roadmap</title>
+    <meta name="description" content="CivicGuide — Your personalised election roadmap and AI-powered voting assistant. Stay informed on registration deadlines, primaries, and election day." />
+    <meta name="theme-color" content="#0a0f1e" />
+    <title>CivicGuide — Election Roadmap & Voting Assistant</title>
   </head>
-  <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen">
-    <div id="app"></div>
+  <body>
+    <!-- Skip to main content: first focusable element on page for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="app" role="application" aria-label="CivicGuide Application"></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>
