@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.env
+coverage/
+.DS_Store
+backend/tests/*.js
+backend/tests/*.js.map
+backend/tests/*.d.ts
+backend/tests/*.d.ts.map
+backend/dist/
+frontend/dist/
+frontend/node_modules/
+backend/node_modules/
