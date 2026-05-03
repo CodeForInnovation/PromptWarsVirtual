@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import QAAssistant from '../QAAssistant';
 
 // Mock the global fetch
-global.fetch = vi.fn();
+vi.stubGlobal('fetch', vi.fn());
 
 // Helper: set an input value and fire the onInput event so Preact state updates
 function setInputValue(el: HTMLInputElement, value: string) {
@@ -43,7 +43,7 @@ describe('QAAssistant Component', () => {
   });
 
   it('should send a query and display the response', async () => {
-    (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+    (fetch as any).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ answer: 'Yes, you can vote early in California.' }),
     });

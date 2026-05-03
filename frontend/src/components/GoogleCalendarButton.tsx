@@ -15,17 +15,9 @@ export default function GoogleCalendarButton({ title, date, description = '' }: 
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.72rem; font-weight:600; color:#818cf8; text-decoration:none; padding:0.25rem 0.6rem; border-radius:6px; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2); transition:all 0.2s;"
+      class="calendar-btn"
       aria-label={`Add ${title} to Google Calendar (opens in a new tab)`}
       title={`Add ${title} to Google Calendar`}
-      onMouseOver={(e: any) => {
-        e.currentTarget.style.background = 'rgba(99,102,241,0.2)';
-        e.currentTarget.style.borderColor = 'rgba(99,102,241,0.4)';
-      }}
-      onMouseOut={(e: any) => {
-        e.currentTarget.style.background = 'rgba(99,102,241,0.1)';
-        e.currentTarget.style.borderColor = 'rgba(99,102,241,0.2)';
-      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

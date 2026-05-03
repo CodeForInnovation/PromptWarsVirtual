@@ -8,6 +8,13 @@ interface Message {
 
 const SUGGESTED = ['Do I need an ID to vote?', 'Can I vote by mail?', 'What is Election Day?'];
 
+function getCookie(name: string): string | undefined {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
+  return undefined;
+}
+
 export default function QAAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -19,7 +26,6 @@ export default function QAAssistant() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  // Ref to hold latest assistant response for aria-live
   const [liveAnnouncement, setLiveAnnouncement] = useState('');
 
   const scrollToBottom = () => {
@@ -42,13 +48,15 @@ export default function QAAssistant() {
     try {
       const response = await fetch('/api/qa', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-XSRF-TOKEN': getCookie('XSRF-TOKEN') || ''
+        },
         body: JSON.stringify({ query }),
       });
       const data = await response.json();
       const answer = response.ok ? data.answer : 'Sorry, I encountered an error. Please try again.';
       setMessages((prev) => [...prev, { role: 'assistant', content: answer }]);
-      // Announce new answer to screen readers
       setLiveAnnouncement(answer);
     } catch {
       const errMsg = 'Network error. Please try again.';
@@ -71,7 +79,7 @@ export default function QAAssistant() {
       role="region"
       aria-label="CivicGuide AI Q&A Assistant"
     >
-      {/* Hidden aria-live region — announces new assistant messages to screen readers */}
+      {/* Hidden aria-live region */}
       <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
         {liveAnnouncement}
       </div>
@@ -155,7 +163,6 @@ export default function QAAssistant() {
                   ? 'background: linear-gradient(135deg,#6366f1,#7c3aed); color:white; padding: 0.6rem 1rem; border-radius: 16px 16px 4px 16px;'
                   : 'background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #cbd5e1; padding: 0.6rem 1rem; border-radius: 4px 16px 16px 16px;'
               }
-              // Label each message for screen readers
               aria-label={`${msg.role === 'user' ? 'You' : 'CivicGuide'}: ${msg.content}`}
             >
               {msg.content}
@@ -163,7 +170,6 @@ export default function QAAssistant() {
           </div>
         ))}
 
-        {/* Loading indicator */}
         {isLoading && (
           <div
             class="flex justify-start message-animate"
@@ -209,13 +215,7 @@ export default function QAAssistant() {
             <button
               key={s}
               onClick={() => sendMessage(s)}
-              style="font-size:0.72rem; padding:0.3rem 0.7rem; border-radius:9999px; border:1px solid rgba(99,102,241,0.35); background: rgba(99,102,241,0.1); color: #818cf8; cursor:pointer; transition: all 0.2s; font-family: inherit;"
-              onMouseOver={(e: any) => {
-                e.target.style.background = 'rgba(99,102,241,0.2)';
-              }}
-              onMouseOut={(e: any) => {
-                e.target.style.background = 'rgba(99,102,241,0.1)';
-              }}
+              class="suggested-btn"
               aria-label={`Ask: ${s}`}
               type="button"
             >

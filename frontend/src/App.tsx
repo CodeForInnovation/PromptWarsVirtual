@@ -10,26 +10,41 @@ const REGIONS: Record<string, string> = {
   default: 'Other State',
 };
 
+interface Deadlines {
+  registration: string;
+  primary: string;
+  general: string;
+}
+
+declare global {
+  interface Window {
+    googleTranslateElementInit: () => void;
+    google: any;
+  }
+}
+
 export default function App() {
   const [region, setRegion] = useState('CA');
-  const [deadlines, setDeadlines] = useState<any>(null);
+  const [deadlines, setDeadlines] = useState<Deadlines | null>(null);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
 
   useEffect(() => {
-    // Add Google Translate script dynamically after mount to prevent race conditions with Preact
+    // Add Google Translate script dynamically after mount
     if (!document.getElementById('google-translate-script')) {
       const addScript = document.createElement('script');
       addScript.id = 'google-translate-script';
-      addScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      addScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
       addScript.async = true;
+      const nonce = document.querySelector('meta[name="csp-nonce"]')?.getAttribute('content');
+      if (nonce) addScript.setAttribute('nonce', nonce);
       document.body.appendChild(addScript);
 
-      (window as any).googleTranslateElementInit = () => {
-        new (window as any).google.translate.TranslateElement(
+      window.googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
           {
             pageLanguage: 'en',
-            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
           'google_translate_element',
         );

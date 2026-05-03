@@ -108,14 +108,14 @@ function daysUntil(dateStr: string): number | null {
 
 export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
   return (
-    <div class="glass-card p-6">
+    <section class="glass-card p-6" aria-labelledby="roadmap-title">
       {/* Header */}
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="text-lg font-bold text-white">Election Timeline</h2>
-          <p class="text-slate-500 text-sm mt-0.5">{regionLabel}</p>
+          <h2 id="roadmap-title" class="text-lg font-bold text-white">Election Timeline</h2>
+          <p class="text-slate-400 text-sm mt-0.5">{regionLabel}</p>
         </div>
-        <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+        <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400" aria-hidden="true">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -135,8 +135,8 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
         </div>
       </div>
 
-      {/* Steps */}
-      <div>
+      {/* Steps List */}
+      <ol class="space-y-0" aria-label="Election steps roadmap">
         {STEP_CONFIG.map((step, i) => {
           const date = deadlines[step.key];
           const days = daysUntil(date);
@@ -144,7 +144,7 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
           const isSoon = days !== null && days >= 0 && days <= 30;
 
           return (
-            <div
+            <li
               key={step.key}
               class="timeline-step"
               style={i === STEP_CONFIG.length - 1 ? 'padding-bottom:0' : ''}
@@ -152,6 +152,7 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
               {/* Dot */}
               <div
                 class="timeline-dot"
+                aria-hidden="true"
                 style={`background: linear-gradient(135deg, ${step.gradient.replace('from-', '').replace(' to-', '').split(' ')[0]}, ${step.gradient.split(' ').pop()}); box-shadow: 0 0 20px ${step.glow}; border: none; color: white;`}
               >
                 {isPast ? (
@@ -172,7 +173,7 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
               </div>
 
               {/* Content */}
-              <div
+              <article
                 class="group"
                 style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1rem 1.1rem; transition: all 0.3s ease; cursor: default;"
               >
@@ -182,14 +183,15 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
                       <span
                         class="badge"
                         style={`background: ${step.badgeBg}; color: ${step.badgeColor}; border: 1px solid ${step.badgeBg.replace('0.15', '0.3')}`}
+                        aria-label={`Step ${i + 1}`}
                       >
-                        {step.icon}
+                        <span aria-hidden="true">{step.icon}</span>
                         {step.badge}
                       </span>
                       {isPast && (
                         <span
                           class="badge"
-                          style="background: rgba(148,163,184,0.1); color: #64748b; border: 1px solid rgba(148,163,184,0.2)"
+                          style="background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2)"
                         >
                           Passed
                         </span>
@@ -204,14 +206,14 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
                       )}
                     </div>
                     <h3 class="font-semibold text-white text-sm mb-1">{step.label}</h3>
-                    <p class="text-slate-500 text-xs leading-relaxed">{step.description}</p>
+                    <p class="text-slate-400 text-xs leading-relaxed">{step.description}</p>
                   </div>
                   <div class="text-right shrink-0">
-                    <div class="text-xs font-bold" style={`color: ${step.badgeColor}`}>
+                    <time class="text-xs font-bold block" dateTime={date} style={`color: ${step.badgeColor}`}>
                       {formatDate(date)}
-                    </div>
+                    </time>
                     {!isPast && days !== null && (
-                      <div class="text-slate-600 text-xs mt-0.5">
+                      <div class="text-slate-400 text-xs mt-0.5" aria-label={`${days} days remaining`}>
                         {days === 0 ? 'Today!' : `${days}d away`}
                       </div>
                     )}
@@ -224,11 +226,11 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
                     description={`CivicGuide reminder: ${step.description}`}
                   />
                 </div>
-              </div>
-            </div>
+              </article>
+            </li>
           );
         })}
-      </div>
-    </div>
+      </ol>
+    </section>
   );
 }

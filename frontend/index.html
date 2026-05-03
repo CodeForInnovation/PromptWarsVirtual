@@ -4,14 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="CivicGuide — Your personalised election roadmap and AI-powered voting assistant. Stay informed on registration deadlines, primaries, and election day." />
+    <meta name="keywords" content="election, voting, roadmap, civic tech, AI assistant, voter registration, election day" />
+    <meta name="author" content="CivicGuide Team" />
     <meta name="theme-color" content="#0a0f1e" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://civicguide-687579320432.us-central1.run.app/" />
+    <meta property="og:title" content="CivicGuide — Election Roadmap & Voting Assistant" />
+    <meta property="og:description" content="Your personalised election roadmap and AI-powered voting assistant." />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://civicguide-687579320432.us-central1.run.app/" />
+    <meta property="twitter:title" content="CivicGuide — Election Roadmap & Voting Assistant" />
+    <meta property="twitter:description" content="Your personalised election roadmap and AI-powered voting assistant." />
+    <meta property="twitter:image" content="/og-image.png" />
+
     <title>CivicGuide — Election Roadmap & Voting Assistant</title>
+    
+    <link rel="canonical" href="https://civicguide-687579320432.us-central1.run.app/" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <meta name="csp-nonce" content="{{NONCE}}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "CivicGuide",
+        "url": "https://civicguide-687579320432.us-central1.run.app/",
+        "description": "Your personalised election roadmap and AI-powered voting assistant.",
+        "applicationCategory": "GovernmentService",
+        "operatingSystem": "All"
+      }
+    </script>
   </head>
   <body>
-    <!-- Skip to main content: first focusable element on page for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="app" role="application" aria-label="CivicGuide Application"></div>
-    
-    <script type="module" src="/src/index.tsx"></script>
+    <script type="module" src="/src/index.tsx" nonce="{{NONCE}}"></script>
   </body>
 </html>
