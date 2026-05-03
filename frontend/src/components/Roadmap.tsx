@@ -17,9 +17,19 @@ const STEP_CONFIG = [
   {
     key: 'registration' as keyof Deadlines,
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
       </svg>
     ),
     label: 'Voter Registration',
@@ -33,13 +43,23 @@ const STEP_CONFIG = [
   {
     key: 'primary' as keyof Deadlines,
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 11 12 14 22 4"/>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="9 11 12 14 22 4" />
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
       </svg>
     ),
     label: 'Primary Election',
-    description: 'Vote to select your party\'s nominee for the general election.',
+    description: "Vote to select your party's nominee for the general election.",
     gradient: 'from-violet-500 to-purple-500',
     glow: 'rgba(139,92,246,0.4)',
     badge: 'Step 2',
@@ -49,8 +69,18 @@ const STEP_CONFIG = [
   {
     key: 'general' as keyof Deadlines,
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
     label: 'General Election',
@@ -86,11 +116,21 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
           <p class="text-slate-500 text-sm mt-0.5">{regionLabel}</p>
         </div>
         <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="8" y1="2" x2="8" y2="6"/>
-            <line x1="3" y1="10" x2="21" y2="10"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
         </div>
       </div>
@@ -104,15 +144,27 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
           const isSoon = days !== null && days >= 0 && days <= 30;
 
           return (
-            <div key={step.key} class="timeline-step" style={i === STEP_CONFIG.length - 1 ? 'padding-bottom:0' : ''}>
+            <div
+              key={step.key}
+              class="timeline-step"
+              style={i === STEP_CONFIG.length - 1 ? 'padding-bottom:0' : ''}
+            >
               {/* Dot */}
               <div
                 class="timeline-dot"
-                style={`background: linear-gradient(135deg, ${step.gradient.replace('from-','').replace(' to-','').split(' ')[0]}, ${step.gradient.split(' ').pop()}); box-shadow: 0 0 20px ${step.glow}; border: none; color: white;`}
+                style={`background: linear-gradient(135deg, ${step.gradient.replace('from-', '').replace(' to-', '').split(' ')[0]}, ${step.gradient.split(' ').pop()}); box-shadow: 0 0 20px ${step.glow}; border: none; color: white;`}
               >
                 {isPast ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="20 6 9 17 4 12"/>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
                 ) : (
                   <span style="font-size:0.75rem; font-weight:700">{i + 1}</span>
@@ -120,21 +172,33 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
               </div>
 
               {/* Content */}
-              <div class="group" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1rem 1.1rem; transition: all 0.3s ease; cursor: default;">
+              <div
+                class="group"
+                style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1rem 1.1rem; transition: all 0.3s ease; cursor: default;"
+              >
                 <div class="flex items-start justify-between gap-3 flex-wrap">
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1 flex-wrap">
-                      <span class="badge" style={`background: ${step.badgeBg}; color: ${step.badgeColor}; border: 1px solid ${step.badgeBg.replace('0.15','0.3')}`}>
+                      <span
+                        class="badge"
+                        style={`background: ${step.badgeBg}; color: ${step.badgeColor}; border: 1px solid ${step.badgeBg.replace('0.15', '0.3')}`}
+                      >
                         {step.icon}
                         {step.badge}
                       </span>
                       {isPast && (
-                        <span class="badge" style="background: rgba(148,163,184,0.1); color: #64748b; border: 1px solid rgba(148,163,184,0.2)">
+                        <span
+                          class="badge"
+                          style="background: rgba(148,163,184,0.1); color: #64748b; border: 1px solid rgba(148,163,184,0.2)"
+                        >
                           Passed
                         </span>
                       )}
                       {isSoon && !isPast && (
-                        <span class="badge" style="background: rgba(234,179,8,0.15); color: #facc15; border: 1px solid rgba(234,179,8,0.25)">
+                        <span
+                          class="badge"
+                          style="background: rgba(234,179,8,0.15); color: #facc15; border: 1px solid rgba(234,179,8,0.25)"
+                        >
                           ⚡ Soon
                         </span>
                       )}
@@ -143,9 +207,13 @@ export default function Roadmap({ deadlines, regionLabel }: RoadmapProps) {
                     <p class="text-slate-500 text-xs leading-relaxed">{step.description}</p>
                   </div>
                   <div class="text-right shrink-0">
-                    <div class="text-xs font-bold" style={`color: ${step.badgeColor}`}>{formatDate(date)}</div>
+                    <div class="text-xs font-bold" style={`color: ${step.badgeColor}`}>
+                      {formatDate(date)}
+                    </div>
                     {!isPast && days !== null && (
-                      <div class="text-slate-600 text-xs mt-0.5">{days === 0 ? 'Today!' : `${days}d away`}</div>
+                      <div class="text-slate-600 text-xs mt-0.5">
+                        {days === 0 ? 'Today!' : `${days}d away`}
+                      </div>
                     )}
                   </div>
                 </div>

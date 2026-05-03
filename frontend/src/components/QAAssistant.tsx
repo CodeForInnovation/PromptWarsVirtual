@@ -6,17 +6,14 @@ interface Message {
   content: string;
 }
 
-const SUGGESTED = [
-  'Do I need an ID to vote?',
-  'Can I vote by mail?',
-  'What is Election Day?',
-];
+const SUGGESTED = ['Do I need an ID to vote?', 'Can I vote by mail?', 'What is Election Day?'];
 
 export default function QAAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm CivicGuide — your AI assistant for all things elections. Ask me anything about voting requirements, deadlines, or how the process works.",
+      content:
+        "Hi! I'm CivicGuide — your AI assistant for all things elections. Ask me anything about voting requirements, deadlines, or how the process works.",
     },
   ]);
   const [input, setInput] = useState('');
@@ -26,15 +23,19 @@ export default function QAAssistant() {
   const [liveAnnouncement, setLiveAnnouncement] = useState('');
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
-  useEffect(() => { scrollToBottom(); }, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const sendMessage = async (query: string) => {
     if (!query.trim() || isLoading) return;
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: query }]);
+    setMessages((prev) => [...prev, { role: 'user', content: query }]);
     setIsLoading(true);
     setLiveAnnouncement('');
 
@@ -46,12 +47,12 @@ export default function QAAssistant() {
       });
       const data = await response.json();
       const answer = response.ok ? data.answer : 'Sorry, I encountered an error. Please try again.';
-      setMessages(prev => [...prev, { role: 'assistant', content: answer }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: answer }]);
       // Announce new answer to screen readers
       setLiveAnnouncement(answer);
     } catch {
       const errMsg = 'Network error. Please try again.';
-      setMessages(prev => [...prev, { role: 'assistant', content: errMsg }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: errMsg }]);
       setLiveAnnouncement(errMsg);
     } finally {
       setIsLoading(false);
@@ -71,12 +72,7 @@ export default function QAAssistant() {
       aria-label="CivicGuide AI Q&A Assistant"
     >
       {/* Hidden aria-live region — announces new assistant messages to screen readers */}
-      <div
-        aria-live="polite"
-        aria-atomic="true"
-        class="sr-only"
-        role="status"
-      >
+      <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
         {liveAnnouncement}
       </div>
 
@@ -87,15 +83,34 @@ export default function QAAssistant() {
             style="width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg,#6366f1,#8b5cf6); display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 15px rgba(99,102,241,0.4);"
             aria-hidden="true"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
           </div>
           <div>
-            <p class="text-white font-semibold text-sm" id="qa-assistant-title">CivicGuide AI</p>
+            <p class="text-white font-semibold text-sm" id="qa-assistant-title">
+              CivicGuide AI
+            </p>
             <div class="flex items-center gap-1.5 mt-0.5" aria-hidden="true">
-              <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 6px #22c55e;" aria-hidden="true"/>
-              <span style="color:#4ade80; font-size:0.7rem; font-weight:500;">Powered by Gemini</span>
+              <span
+                style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 6px #22c55e;"
+                aria-hidden="true"
+              />
+              <span style="color:#4ade80; font-size:0.7rem; font-weight:500;">
+                Powered by Gemini
+              </span>
             </div>
           </div>
         </div>
@@ -118,8 +133,18 @@ export default function QAAssistant() {
                 style="width:28px; height:28px; border-radius:8px; background: linear-gradient(135deg,#6366f1,#8b5cf6); display:flex; align-items:center; justify-content:center; margin-right:8px; flex-shrink:0; margin-top:2px;"
                 aria-hidden="true"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" aria-hidden="true" focusable="false">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
             )}
@@ -140,19 +165,33 @@ export default function QAAssistant() {
 
         {/* Loading indicator */}
         {isLoading && (
-          <div class="flex justify-start message-animate" role="status" aria-label="CivicGuide is thinking">
+          <div
+            class="flex justify-start message-animate"
+            role="status"
+            aria-label="CivicGuide is thinking"
+          >
             <div
               style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;"
               aria-hidden="true"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" aria-hidden="true" focusable="false">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                stroke-width="2.5"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
             <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 0.7rem 1rem; border-radius: 4px 16px 16px 16px; display:flex; align-items:center; gap:4px;">
-              <span class="typing-dot" aria-hidden="true"/>
-              <span class="typing-dot" aria-hidden="true"/>
-              <span class="typing-dot" aria-hidden="true"/>
+              <span class="typing-dot" aria-hidden="true" />
+              <span class="typing-dot" aria-hidden="true" />
+              <span class="typing-dot" aria-hidden="true" />
               <span class="sr-only">CivicGuide is thinking…</span>
             </div>
           </div>
@@ -166,13 +205,17 @@ export default function QAAssistant() {
           aria-label="Suggested questions"
           style="padding: 0 1rem 0.5rem; display:flex; flex-wrap:wrap; gap:0.4rem;"
         >
-          {SUGGESTED.map(s => (
+          {SUGGESTED.map((s) => (
             <button
               key={s}
               onClick={() => sendMessage(s)}
               style="font-size:0.72rem; padding:0.3rem 0.7rem; border-radius:9999px; border:1px solid rgba(99,102,241,0.35); background: rgba(99,102,241,0.1); color: #818cf8; cursor:pointer; transition: all 0.2s; font-family: inherit;"
-              onMouseOver={(e: any) => { e.target.style.background = 'rgba(99,102,241,0.2)'; }}
-              onMouseOut={(e: any) => { e.target.style.background = 'rgba(99,102,241,0.1)'; }}
+              onMouseOver={(e: any) => {
+                e.target.style.background = 'rgba(99,102,241,0.2)';
+              }}
+              onMouseOut={(e: any) => {
+                e.target.style.background = 'rgba(99,102,241,0.1)';
+              }}
               aria-label={`Ask: ${s}`}
               type="button"
             >
@@ -217,9 +260,21 @@ export default function QAAssistant() {
             style="padding: 0.65rem 0.9rem; border-radius:10px; min-width:42px;"
             aria-label={isLoading ? 'Sending message, please wait' : 'Send message'}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <line x1="22" y1="2" x2="11" y2="13"/>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
             </svg>
           </button>
         </form>

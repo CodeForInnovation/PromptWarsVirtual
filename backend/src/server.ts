@@ -12,34 +12,60 @@ const PORT = process.env.PORT || 8080;
 app.set('trust proxy', 1);
 
 // Security Middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://translate.googleapis.com", "https://translate.google.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://translate.googleapis.com", "https://translate.google.com"],
-      imgSrc: ["'self'", "data:", "https:", "https://translate.googleapis.com", "https://translate.google.com", "https://www.gstatic.com"],
-      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://translate.googleapis.com"],
-      frameSrc: ["https://www.youtube.com", "https://youtube.com"],
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          'https://translate.googleapis.com',
+          'https://translate.google.com',
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https://translate.googleapis.com',
+          'https://translate.google.com',
+        ],
+        imgSrc: [
+          "'self'",
+          'data:',
+          'https:',
+          'https://translate.googleapis.com',
+          'https://translate.google.com',
+          'https://www.gstatic.com',
+        ],
+        connectSrc: [
+          "'self'",
+          'https://generativelanguage.googleapis.com',
+          'https://translate.googleapis.com',
+        ],
+        frameSrc: ['https://www.youtube.com', 'https://youtube.com'],
+      },
     },
-  },
-}));
+  }),
+);
 
 // Strict CORS: Only allow our Cloud Run URL and localhost
 const allowedOrigins = [
   'https://civicguide-687579320432.us-central1.run.app',
-  'http://localhost:8080'
+  'http://localhost:8080',
 ];
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST']
-}));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST'],
+  }),
+);
 
 // Prevent large payload DoS attacks
 app.use(express.json({ limit: '10kb' }));

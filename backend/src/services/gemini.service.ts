@@ -16,7 +16,7 @@ async function getApiKey(): Promise<string> {
   // Otherwise, fetch from Secret Manager
   const projectId = process.env.PROJECT_ID || 'prompt-wars-495105';
   const secretName = `projects/${projectId}/secrets/GEMINI_API_KEY/versions/latest`;
-  
+
   try {
     const [version] = await secretManagerClient.accessSecretVersion({
       name: secretName,
@@ -28,7 +28,7 @@ async function getApiKey(): Promise<string> {
     return payload;
   } catch (error) {
     console.error('Failed to fetch from Secret Manager:', error);
-    throw new Error('Failed to retrieve API key');
+    throw new Error('Failed to retrieve API key', { cause: error });
   }
 }
 
@@ -44,12 +44,16 @@ export async function askGemini(query: string): Promise<string> {
       contents: [
         {
           role: 'user',
-          parts: [{ text: `You are an expert election guide. Answer the following user query about voting realistically but concisely (under 100 words).\n\nUser: ${query}` }]
-        }
+          parts: [
+            {
+              text: `You are an expert election guide. Answer the following user query about voting realistically but concisely (under 100 words).\n\nUser: ${query}`,
+            },
+          ],
+        },
       ],
       config: {
-          systemInstruction: "You are CivicGuide, an expert on election processes."
-      }
+        systemInstruction: 'You are CivicGuide, an expert on election processes.',
+      },
     });
 
     return response.text || "I'm sorry, I couldn't generate an answer at this time.";

@@ -9,25 +9,25 @@ const purify = DOMPurify(window);
 
 // Mock Deadlines API
 router.get('/deadlines', (req, res) => {
-  const region = req.query.region as string || 'default';
-  
+  const region = (req.query.region as string) || 'default';
+
   // Simulated dynamic deadlines
   const deadlines: Record<string, any> = {
-    'CA': {
+    CA: {
       registration: '2024-10-21',
       primary: '2024-03-05',
-      general: '2024-11-05'
+      general: '2024-11-05',
     },
-    'NY': {
+    NY: {
       registration: '2024-10-26',
       primary: '2024-06-25',
-      general: '2024-11-05'
+      general: '2024-11-05',
     },
-    'default': {
+    default: {
       registration: '2024-10-01',
       primary: '2024-05-01',
-      general: '2024-11-05'
-    }
+      general: '2024-11-05',
+    },
   };
 
   const selectedDeadlines = deadlines[region] || deadlines['default'];
@@ -44,7 +44,7 @@ router.post('/qa', async (req, res) => {
 
     // Sanitize input
     const sanitizedQuery = purify.sanitize(rawQuery);
-    
+
     const answer = await askGemini(sanitizedQuery);
     res.json({ answer });
   } catch (error) {

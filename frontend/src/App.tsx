@@ -26,10 +26,13 @@ export default function App() {
       document.body.appendChild(addScript);
 
       (window as any).googleTranslateElementInit = () => {
-        new (window as any).google.translate.TranslateElement({
-          pageLanguage: 'en',
-          layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
+        new (window as any).google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          'google_translate_element',
+        );
       };
     }
   }, []);
@@ -42,7 +45,7 @@ export default function App() {
         const res = await fetch(`/api/deadlines?region=${region}`);
         const data = await res.json();
         setDeadlines(data.deadlines);
-      } catch (e) {
+      } catch (_e) {
         setFetchError(true);
       }
       setLoading(false);
@@ -57,7 +60,6 @@ export default function App() {
       <div class="hero-glow bg-violet-600" style="top: 200px; right: -150px;" aria-hidden="true" />
 
       <div class="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-12">
-
         {/* ── Header ─────────────────────────────────────── */}
         <header role="banner">
           <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
@@ -66,11 +68,28 @@ export default function App() {
                 class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30"
                 aria-hidden="true"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <span class="text-slate-400 text-sm font-medium tracking-widest uppercase" aria-hidden="true">CivicGuide</span>
+              <span
+                class="text-slate-400 text-sm font-medium tracking-widest uppercase"
+                aria-hidden="true"
+              >
+                CivicGuide
+              </span>
             </div>
             {/* Google Translate Widget Container */}
             <div id="google_translate_element" aria-label="Translate Page"></div>
@@ -80,7 +99,8 @@ export default function App() {
             Your <span class="gradient-text">Election Roadmap</span>
           </h1>
           <p class="text-slate-400 text-lg max-w-2xl leading-relaxed">
-            Stay on top of every deadline. From registration to election day — we've got your civic journey covered.
+            Stay on top of every deadline. From registration to election day — we've got your civic
+            journey covered.
           </p>
 
           {/* Region selector */}
@@ -91,12 +111,14 @@ export default function App() {
             <select
               id="region-select"
               value={region}
-              onChange={(e) => setRegion((e.target as HTMLSelectElement).value)}
+              onChange={(_e) => setRegion((_e.target as HTMLSelectElement).value)}
               class="region-select"
               aria-describedby="region-hint"
             >
               {Object.entries(REGIONS).map(([key, label]) => (
-                <option key={key} value={key}>{label}</option>
+                <option key={key} value={key}>
+                  {label}
+                </option>
               ))}
             </select>
             <span id="region-hint" class="sr-only">
@@ -108,8 +130,15 @@ export default function App() {
               aria-label="Live data"
               role="status"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <circle cx="12" cy="12" r="8"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="8" />
               </svg>
               Live
             </div>
@@ -118,10 +147,11 @@ export default function App() {
 
         {/* ── Main content ───────────────────────────────── */}
         <main id="main-content" class="grid lg:grid-cols-2 gap-6 mt-10" tabIndex={-1}>
-
           {/* Election Timeline */}
           <section aria-labelledby="timeline-heading">
-            <h2 id="timeline-heading" class="sr-only">Election Timeline for {REGIONS[region]}</h2>
+            <h2 id="timeline-heading" class="sr-only">
+              Election Timeline for {REGIONS[region]}
+            </h2>
             {loading ? (
               <div
                 class="glass-card p-6 space-y-5"
@@ -129,12 +159,12 @@ export default function App() {
                 aria-live="polite"
                 aria-label={`Loading deadlines for ${REGIONS[region]}`}
               >
-                {[1,2,3].map(i => (
+                {[1, 2, 3].map((i) => (
                   <div key={i} class="flex gap-4 animate-pulse" aria-hidden="true">
-                    <div class="w-9 h-9 rounded-full bg-white/10 shrink-0"/>
+                    <div class="w-9 h-9 rounded-full bg-white/10 shrink-0" />
                     <div class="flex-1 space-y-2">
-                      <div class="h-4 bg-white/10 rounded w-3/4"/>
-                      <div class="h-3 bg-white/10 rounded w-1/2"/>
+                      <div class="h-4 bg-white/10 rounded w-3/4" />
+                      <div class="h-3 bg-white/10 rounded w-1/2" />
                     </div>
                   </div>
                 ))}
@@ -142,8 +172,12 @@ export default function App() {
               </div>
             ) : fetchError ? (
               <div class="glass-card p-6 text-center" role="alert" aria-live="assertive">
-                <p style="color:#f87171; font-weight:600; margin-bottom:0.25rem;">Failed to load deadlines</p>
-                <p class="text-slate-400 text-sm">Please refresh the page or try selecting a different region.</p>
+                <p style="color:#f87171; font-weight:600; margin-bottom:0.25rem;">
+                  Failed to load deadlines
+                </p>
+                <p class="text-slate-400 text-sm">
+                  Please refresh the page or try selecting a different region.
+                </p>
               </div>
             ) : deadlines ? (
               <Roadmap region={region} deadlines={deadlines} regionLabel={REGIONS[region]} />
@@ -152,14 +186,20 @@ export default function App() {
 
           {/* Q&A Assistant */}
           <section aria-labelledby="qa-heading" class="flex flex-col gap-6">
-            <h2 id="qa-heading" class="sr-only">Election Q&amp;A Assistant</h2>
+            <h2 id="qa-heading" class="sr-only">
+              Election Q&amp;A Assistant
+            </h2>
             <QAAssistant />
             <PledgeToVote />
           </section>
         </main>
 
         {/* ── Footer ─────────────────────────────────────── */}
-        <footer role="contentinfo" class="mt-12 text-center" style="color: #475569; font-size: 0.75rem;">
+        <footer
+          role="contentinfo"
+          class="mt-12 text-center"
+          style="color: #475569; font-size: 0.75rem;"
+        >
           <p>
             CivicGuide is an educational tool.{' '}
             <a
@@ -173,7 +213,6 @@ export default function App() {
             </a>
           </p>
         </footer>
-
       </div>
     </div>
   );
